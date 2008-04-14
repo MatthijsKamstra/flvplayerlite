@@ -2,13 +2,7 @@
 
 = Introduction =
 
+An excellent AS2 *and* AS3 tweening engine, that is lightweight and fast!
+
 Read more about TweenLite:
 http://blog.greensock.com/category/tweening/
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
