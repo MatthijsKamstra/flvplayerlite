@@ -66,27 +66,27 @@ EXAMPLES:
 	Load a .FLV in a movieclip
 		
 		import nl.matthijskamstra.media.FLVPlayerLite; // import
-		FLVPlayerLite.create ( flvContainer2_mc, 'flv/foobar.flv' );
+		FLVPlayerLite.create ( flvContainer_mc, 'flv/foobar.flv' );
 		
 		
-	More controle over your .FLV
-	but the flv doesn't start playing (autoPlay:false) unless you deside to, at the end of the flv (onComplete) a function (example: "flvOneOnComplete") is triggered
+	Do you want more controle over your .FLV: in this case your movie doesn't start at once(autoPlay:false) 
+	and at the end of the .FLV (onComplete) a function will be called (example: "flvOnComplete").
 		
 		import nl.matthijskamstra.media.FLVPlayerLite; // import
-		var __FLVPlayerLite2:FLVPlayerLite = new FLVPlayerLite ( player1Container_mc, 'flv/foobar.flv', { autoPlay:false , onComplete:flvOneOnComplete } );
-		private function flvOneOnComplete():void {
-			//trace( ":: flvOneOnComplete ::");
-		}
+		FLVPlayerLite.create ( player1Container_mc, 'flv/foobar.flv', { autoPlay:false , onComplete:flvOnComplete } );
+		private function flvOnComplete():void { // trace( ":: flvOnComplete ::"); }
 		
+	You can also get the feedback on cuepoints in your .FLV:  
+	at the end of the .FLV (onComplete) a function will be called (example: "flvOnComplete")
+	and every cuepoint in the .FLV will call to a function (example: "flvOnCuePoint"). 
+	This function will receive the name and time of the cuepoint		
 		
-		
-		
-		var __FLVPlayerLite1 = new FLVPlayerLite ( Container_mc, 'flv/foobar.flv', { autoPlay:false , onComplete:flvOneOnComplete , onCuePoint:flvOnCuePoint} );
+		var __FLVPlayerLite1 = new FLVPlayerLite ( Container_mc, 'flv/foobar.flv', { onComplete:flvOnComplete , onCuePoint:flvOnCuePoint} );
+		private function flvOnComplete():void { // trace( ":: flvOnComplete ::"); }
 		private function flvOnCuePoint( $name:String, $time:Number, ...arg ):void {
-			//trace( "|| flvOnCuePoint ||" );
-			//trace( "$name : " + $name  + ' - '+ typeof ($name));
-			//trace( "$time : " + $time + ' - '+ typeof ($time));
-			for( var i:String in arg ) //trace( "key : " + i + ", value : " + arg[ i ] );
+			// trace( "|| flvOnCuePoint ||" );
+			// trace( "$name : " + $name  + ' - '+ typeof ($name));
+			// trace( "$time : " + $time + ' - '+ typeof ($time));
 			switch ($name) {
 				case 'foobar':
 					trace('<< foobar >>');
@@ -96,19 +96,17 @@ EXAMPLES:
 			}
 		}
 		
-		
-		
-
 
 NOTES:
 	- this project is opensource: http://code.google.com/p/flvplayerlite/
-	- 
-
+	- some features descibed here will not be working currently so visit the project homepage for detailed information
+	- visit my site: http://MatthijsKamstra.nl/blog
+	- all your base are belong to us
 
 
 CHANGELOG:
 	
-	v1.0 [7-4-2008] - Initial release
+	v0.1 [7-4-2008] - Initial release
 		
 */
 package nl.matthijskamstra.media {
@@ -118,7 +116,6 @@ package nl.matthijskamstra.media {
 	import flash.media.SoundTransform;
     import flash.media.Video;
 	import flash.net.NetConnection;
-    import flash.net.NetConnection;
     import flash.net.NetStream;
 
     public class FLVPlayerLite extends Sprite {
@@ -390,7 +387,7 @@ package nl.matthijskamstra.media {
 		/////////////////////////////////////// Static ///////////////////////////////////////
 		
 		
-		public static function create ( $targetObj:DisplayObjectContainer , $url:String, $obj:Object):FLVPlayerLite {
+		public static function create ( $targetObj:DisplayObjectContainer , $url:String, $obj:Object=null):FLVPlayerLite {
 			return new FLVPlayerLite ($targetObj, $url, $obj);
 		}
 		
