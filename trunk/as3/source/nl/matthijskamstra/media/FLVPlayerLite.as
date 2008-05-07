@@ -1,34 +1,75 @@
 ﻿/**
-FLVPlayerLite (AS3), version 1.0
+
+FLVPlayerLite (AS3), version 0.1
+
+<pre>
+ ____                   _      ____ 
+|  __| _ __ ___    ___ | | __ |__  |
+| |   | '_ ` _ \  / __|| |/ /    | |
+| |   | | | | | || (__ |   <     | |
+| |__ |_| |_| |_| \___||_|\_\  __| |
+|____|                        |____|
+
+</pre>
+
+@class  	: 	FLVPlayerLite
+@author 	:  	Matthijs C. Kamstra [mck]
+@version 	:	0.1 - class creation (AS3)
+@since 		:	7-4-2008 17:07 
+
+
+DESCRIPTION:
+	FLV video is the native video format for Flash, and because of that probably the 
+	most use video format on the internet (YouTube, Google Video).
+
+	This FLV Player doesn't have all the features that you have when you use a Flash component, 
+	but the basics: play, pause, mute. In the nearby future it will also have a playback bar, 
+	loading progress and a dragable seek button (). 
+	It is the basics that I use, and there for this FLV player will be lite. 
+	
+	I love the lite versions, because you can use in big OOP projects, but also in small (banners) project. 
+	My favorite lite class is tweenlite (AS3) or AS2. Frequent Tweenlite users will recognize the syntax.
+
+	So what is the difference between the Flash component and FLVPlayerLite? 
+	Besides the restrictions I mentioned before (basic features) the SWF will be much "liter"
+	
+	Flash component: 52,0 KB (53.248 bytes) -- VS -- FLVPlayerLite: 4,00 KB (4.096 bytes)
+
 
 ARGUMENTS:
-	1) $target: Target MovieClip (or any other object) whose properties we're tweening
-	2) $duration: Duration (in seconds) of the effect
-	3) $vars: An object containing the end values of all the properties you'd like to have tweened (or if you're using the 
-	         TweenLite.from() method, these variables would define the BEGINNING values). For example:
-					  alpha: The alpha (opacity level) that the target object should finish at (or begin at if you're 
-							 using TweenLite.from()). For example, if the target.alpha is 1 when this script is 
-					  		 called, and you specify this argument to be 0.5, it'll transition from 1 to 0.5.
-					  x: To change a MovieClip's x position, just set this to the value you'd like the MovieClip to 
-					     end up at (or begin at if you're using TweenLite.from()). 
-				  SPECIAL PROPERTIES:
-					  onCuePoint: If you'd like to call a function when a cuepoint is entered, use this. 
-					  onCuePointParams: An array of parameters to pass the onCuePoint function (this is optional)
-					  onComplete: If you'd like to call a function when the tween has finished, use this. 
-					  onCompleteParams: An array of parameters to pass the onComplete function
-
+	1) $targeObj: 	Target MovieClip (or any other object) where the FLVPlayerLite will be created
+	2) $url: 		path to FLV file
+	3) $obj: 		An object containing param that you want to use with the creation of the FLVPlayerLite, playing or ending of the FLV
+						CREATION: 
+							x					: set the FLVPlayerLite's x position
+							y					: set the FLVPlayerLite's y position
+							depth				: set the FLVPlayerLite's depth 
+							name				: set the FLVPlayerLite's name
+						PLAYING:
+							autoPlay			: start automatic play (default true)
+						SPECIAL PROPERTIES:
+							onCuePoint			: If you'd like to call a function when a cuepoint is entered, use this. 
+							onCuePointParams	: An array of parameters to pass the onCuePoint function (optional)
+							onComplete			: If you'd like to call a function when the tween has finished, use this. 
+							onCompleteParams	: An array of parameters to pass the onComplete function (optional)
+							
 EXAMPLES: 
-	Just load a flv into a timeline
+	Load a .FLV on a timeline
 		
 		import nl.matthijskamstra.media.FLVPlayerLite; // import
-		var __FLVPlayerLite:FLVPlayerLite = new FLVPlayerLite ( this , 'flv/foobar.flv' );
+		var __FLVPlayerLite:FLVPlayerLite = new FLVPlayerLite ( this, 'flv/foobar.flv' );
 		
-	Just load a flv into a movieclip
+		or 
+		
+		FLVPlayerLite.create ( this, 'flv/foobar.flv' );
+		
+	Load a .FLV in a movieclip
 		
 		import nl.matthijskamstra.media.FLVPlayerLite; // import
-		var __FLVPlayerLite2:FLVPlayerLite = new FLVPlayerLite ( flvContainer2_mc, 'flv/foobar.flv' );
+		FLVPlayerLite.create ( flvContainer2_mc, 'flv/foobar.flv' );
 		
-	more controle over your flv	
+		
+	More controle over your .FLV
 	but the flv doesn't start playing (autoPlay:false) unless you deside to, at the end of the flv (onComplete) a function (example: "flvOneOnComplete") is triggered
 		
 		import nl.matthijskamstra.media.FLVPlayerLite; // import
@@ -58,37 +99,17 @@ EXAMPLES:
 		
 		
 
-		
-	
 
 NOTES:
-	- This class will add about 2.5kb to your Flash file.
-	- Putting quotes around values will make the tween relative to the current value. For example, if you do
-	  TweenLite.to(mc, 2, {x:"-20"}); it'll move the mc.x to the left 20 pixels which is the same as doing
-	  TweenLite.to(mc, 2, {x:mc.x - 20});
-	- You must target Flash Player 9 or later (ActionScript 3.0)
-	- To tween an array, just pass in an array as a property (it doesn't matter what you name it) like:
-	  var myArray_array = [1,2,3,4];
-	  TweenLite.to(myArray_array, 1.5, {end_array:[10,20,30,40]});
-	- You can kill all tweens for a particular object (usually a MovieClip) anytime with the 
-	  TweenLite.killTweensOf(myClip_mc); function.
-	  
+	- this project is opensource: http://code.google.com/p/flvplayerlite/
+	- 
 
-* <pre>
-*  ____                   _      ____ 
-* |  __| _ __ ___    ___ | | __ |__  |
-* | |   | '_ ` _ \  / __|| |/ /    | |
-* | |   | | | | | || (__ |   <     | |
-* | |__ |_| |_| |_| \___||_|\_\  __| |
-* |____|                        |____|
-* 
-* </pre>
-*
-* @class  	: 	FLVPlayerLite
-* @author 	:  	Matthijs C. Kamstra [mck]
-* @version 	:	r1.0 - class creation (AS3)
-* @since 	:	7-4-2008 17:07 
-* 
+
+
+CHANGELOG:
+	
+	v1.0 [7-4-2008] - Initial release
+		
 */
 package nl.matthijskamstra.media {
 	
@@ -102,6 +123,8 @@ package nl.matthijskamstra.media {
 
     public class FLVPlayerLite extends Sprite {
 		
+		public static var version:Number = 0.1;
+		
 		// Constants:
 		public static var CLASS_REF = nl.matthijskamstra.media.FLVPlayerLite;
 		public static var CLASS_NAME : String = "FLVPlayerLite";
@@ -110,7 +133,7 @@ package nl.matthijskamstra.media {
 		public static var targetObj:DisplayObjectContainer;	
 		
 		//compulsory vars passed via constructor
-		//private var url					:String;			//flv file that is to be played
+		//private var url				:String;			//flv file that is to be played
 		private var fileURL				:String; 			//flv file that is to be played
 		  
 		//optional switches 
@@ -149,15 +172,10 @@ package nl.matthijskamstra.media {
 		* 
 		* @usage   	import nl.matthijskamstra.media.FLVPlayerLite; // import
 		*			var __FLVPlayerLite:FLVPlayerLite = new FLVPlayerLite ( this , '../deploy/flv/Final_Mov_Sequence.flv' );
-		* 			var __FLVPlayerLite2:FLVPlayerLite = new FLVPlayerLite ( ($targetObj as MovieClip).flvContainer2_mc, '../deploy/flv/Final_Mov_Sequence.flv' );
+		* 
 		* @param	$targetObj		a reference to a movie clip or object
+		* @param	$url			path to FLV file
 		* @param	$obj			object with extra param
-		* 								name: name of player
-		* 								autoPlay: start automatic play (default true)
-		* 								x
-		* 								y
-		* 								depth
-		* 								onComplete: name of function that is initiated
 		*/
 		public function FLVPlayerLite( $targetObj:DisplayObjectContainer , $url:String, $obj:Object = null) {
 			//trace ( '+ ' + LINKAGE_ID + ' class instantiated');
@@ -219,7 +237,7 @@ package nl.matthijskamstra.media {
 			//// updateButtonStatus();
 		}
 		
-		//////////////////////////////////////// controlers /////////////////////////////////
+		/////////////////////////////////////// start :: FLVPlayerLite Controlers ///////////////////////////////////////
 		
 		public function playPauseToggle():void {
 			//trace( "\t| :: playPauseToggle : " + playPauseToggle );
@@ -275,7 +293,7 @@ package nl.matthijskamstra.media {
 			nsVideo.seek($sec);		
 		}
 
-		//////////////////////////////////////// end :: controlers /////////////////////////////////
+		/////////////////////////////////////// end :: FLVPlayerLite Controlers ///////////////////////////////////////
    
 		/*
 		public function loadVideo():void {
@@ -369,12 +387,15 @@ package nl.matthijskamstra.media {
 			videoObj_vid.clear();
 		}
 		
+		/////////////////////////////////////// Static ///////////////////////////////////////
+		
+		
 		public static function create ( $targetObj:DisplayObjectContainer , $url:String, $obj:Object):FLVPlayerLite {
 			return new FLVPlayerLite ($targetObj, $url, $obj);
 		}
 		
 		
-		//////////////////////////////////// Listeners //////////////////////////////////////
+		/////////////////////////////////////// Listeners ///////////////////////////////////////
 		
 		private function onNetStatusListener(event:NetStatusEvent):void {
             
