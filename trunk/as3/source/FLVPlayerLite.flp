@@ -1,5 +1,6 @@
 ﻿<flash_project name="FLVPlayerLite" version="1">
-    <project_file path="./FLVPlayerLite_single.fla" filetype="fla" profile="" def_file="true" />
-    <project_file path="./FLVPlayerLite.fla" filetype="fla" profile="" />
+    <project_file path="./FLVPlayerLite_single.fla" filetype="fla" profile="" />
     <project_file path="./FLVPlayerLite_component.fla" filetype="fla" profile="" />
+    <project_file path="./FLVPlayerLite_empty.fla" filetype="fla" profile="" />
+    <project_file path="./FLVPlayerLite_controller.fla" filetype="fla" profile="" def_file="true" />
 </flash_project>
