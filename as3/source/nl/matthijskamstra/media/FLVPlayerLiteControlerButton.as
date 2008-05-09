@@ -44,8 +44,9 @@ package nl.matthijskamstra.media {
 		 * @param	$target
 		 * @param	$func
 		 * @param	$vars
+		 * @param	$mouseEvent
 		 */
-		public function FLVPlayerLiteControlerButton( $target:Object , $func:Function , $vars:*=null ) {
+		public function FLVPlayerLiteControlerButton( $target:Object , $func:Function , $vars:* = null , $mouseEvent:String = '' ) {
 			if ($target == null) { return; }
 			//trace ( '+ ' + LINKAGE_ID + ' class instantiated');	
 			
@@ -56,9 +57,15 @@ package nl.matthijskamstra.media {
 				this.vars.push ($vars)
 			}
 			
-			var ___debug_mc = $target;
-			___debug_mc.buttonMode = true;
-			___debug_mc.addEventListener (MouseEvent.CLICK, FLVPlayerLiteControlerButtonListener);
+			var _btn_mc = $target;
+			_btn_mc.buttonMode = true;	
+			if ($mouseEvent == '') {
+				_btn_mc.addEventListener (MouseEvent.CLICK, FLVPlayerLiteControlerButtonListener);
+				//_btn_mc.addEventListener (MouseEvent.ROLL_OUT, FLVPlayerLiteControlerButtonListener);
+			} else {
+				_btn_mc.addEventListener (MouseEvent[$mouseEvent], FLVPlayerLiteControlerButtonListener);
+			}
+			
 		}
 		
 		/////////////////////////////////////// Static ///////////////////////////////////////
@@ -69,8 +76,17 @@ package nl.matthijskamstra.media {
 		 * @param	$func
 		 * @param	$vars
 		 */
-		static public function create ($target:Object , $func:Function , $vars:*=null ):FLVPlayerLiteControlerButton {
-			return new FLVPlayerLiteControlerButton($target, $func, $vars);
+		static public function create ($target:Object , $func:Function , $vars:* = null , $mouseEvent:String = '' ):FLVPlayerLiteControlerButton {
+			return new FLVPlayerLiteControlerButton($target, $func, $vars , $mouseEvent);
+		}
+		static public function onRelease ($target:Object , $func:Function , $vars:*=null ):FLVPlayerLiteControlerButton {
+			return new FLVPlayerLiteControlerButton($target, $func, $vars , 'CLICK');
+		}
+		static public function onRollover ($target:Object , $func:Function , $vars:*= null ):FLVPlayerLiteControlerButton {
+			return new FLVPlayerLiteControlerButton($target, $func, $vars , 'ROLL_OVER');
+		}
+		static public function onRollout ($target:Object , $func:Function , $vars:*= null ):FLVPlayerLiteControlerButton {
+			return new FLVPlayerLiteControlerButton($target, $func, $vars , 'ROLL_OUT');
 		}
 		
 		/////////////////////////////////////// Listener ///////////////////////////////////////
