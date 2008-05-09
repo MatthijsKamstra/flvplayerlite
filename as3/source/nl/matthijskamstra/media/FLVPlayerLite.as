@@ -33,10 +33,10 @@ DESCRIPTION:
 	So what is the difference between the Flash component and FLVPlayerLite? 
 	Besides the restrictions I mentioned before (basic features) the SWF will be much "liter"
 	
-	Flash component: 51,6 KB (52.840 bytes) -- VS -- FLVPlayerLite: 2,73 KB (2.804 bytes)
+	Flash component: 51,6 KB (52.840 bytes) -- VS -- FLVPlayerLite: 3,11 KB (3.185 bytes)
 
 	an empty .SWF is: 36 bytes (36 bytes)
-	a clean FLVPlayerLite is: 2,73 KB (2.804 bytes)
+	a clean FLVPlayerLite is: 3,11 KB (3.185 bytes)
 	a clean Flash component is : 51,6 KB (52.840 bytes) (but has more functionality)
 	
 
@@ -349,7 +349,7 @@ package nl.matthijskamstra.media {
 			}
 		}
 		public function onLoadProgress($percent:Number):void {
-			trace( "\t|\t " + CLASS_NAME + " :: onLoadProgress -- $percent : " + $percent );
+			//trace( "\t|\t " + CLASS_NAME + " :: onLoadProgress -- $percent : " + $percent );
 		}
 		protected function startLoadCheckingEngine():void {
 			targetObj.addEventListener(Event.ENTER_FRAME, onEnterFrameLoadingListener);
@@ -368,7 +368,7 @@ package nl.matthijskamstra.media {
 			onPlayProgress(Math.floor(nPercent), nsVideo.time, nDuration);
 		}
 		public function onPlayProgress($percent:Number, $currentTime:Number, $totalTime:Number):void {
-			trace( "\t|\t " + CLASS_NAME + " :: onPlayProgress -- $percent : " + $percent + " | $currentTime : " + $currentTime + " | $totalTime : " + $totalTime );
+			//trace( "\t|\t " + CLASS_NAME + " :: onPlayProgress -- $percent : " + $percent + " | $currentTime : " + $currentTime + " | $totalTime : " + $totalTime );
 		}
 		protected function startPlayheadTrackingEngine():void {
 			targetObj.addEventListener(Event.ENTER_FRAME, onEnterFramePlayProgressListener);		
