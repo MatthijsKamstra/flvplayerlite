@@ -1,5 +1,5 @@
 ﻿/**
-FLVPlayerLiteControler (AS3), version 1.0
+FLVPlayerLiteController (AS3), version 1.0
 
 Enter description here
 
@@ -13,7 +13,7 @@ Enter description here
 
 </pre>
 
-@class  	: 	FLVPlayerLiteControler
+@class  	: 	FLVPlayerLiteController
 @author 	:  	Matthijs C. Kamstra [mck]
 @version 	:	1.0 - class creation (AS3)
 @since 		:	8-5-2008 14:47 
@@ -25,7 +25,7 @@ NOTES:
 	- some features descibed here will not be working currently so visit the project homepage for detailed information
 	- visit my site: http://MatthijsKamstra.nl/blog
 	- all your base are belong to us
-	- will add 9KB to your .SWF (3KB from the FLVPlayerLite)
+	- will add 9KB to your .SWF (3,11 KB (3.185 bytes) from the FLVPlayerLite)
 
 CHANGELOG:
  		v 1.0 [2008-05-08] - Initial release
@@ -36,12 +36,12 @@ package nl.matthijskamstra.media {
 	import flash.display.*;
 	import flash.events.*;	
 
-	public class FLVPlayerLiteControler extends FLVPlayerLite {
+	public class FLVPlayerLiteController extends FLVPlayerLite {
 		
 		// Constants:
-		public static var CLASS_REF = nl.matthijskamstra.media.FLVPlayerLiteControler;
-		public static var CLASS_NAME : String = "FLVPlayerLiteControler";
-		public static var LINKAGE_ID : String = "nl.matthijskamstra.media.FLVPlayerLiteControler";
+		public static var CLASS_REF = nl.matthijskamstra.media.FLVPlayerLiteController;
+		public static var CLASS_NAME : String = "FLVPlayerLiteController";
+		public static var LINKAGE_ID : String = "nl.matthijskamstra.media.FLVPlayerLiteController";
 		
 		// var
 		private var FLVPlayerControler:Object;
@@ -51,15 +51,15 @@ package nl.matthijskamstra.media {
 		/**
 		* Constructor: create a lite FLV player with controler
 		* 
-		* @usage   	import nl.matthijskamstra.media.FLVPlayerLiteControler; // import
-		*			var __FLVPlayerLiteControler:FLVPlayerLiteControler = new FLVPlayerLiteControler ( this , 'flv/Final_Mov_Sequence.flv' );
-		* 			(read comments in 'nl.matthijskamstra.media.FLVPlayerLite' & 'nl.matthijskamstra.media.FLVPlayerLiteControler')
+		* @usage   	import nl.matthijskamstra.media.FLVPlayerLiteController; // import
+		*			var __FLVPlayerLiteController:FLVPlayerLiteController = new FLVPlayerLiteController ( this , 'flv/Final_Mov_Sequence.flv' );
+		* 			(read comments in 'nl.matthijskamstra.media.FLVPlayerLite' & 'nl.matthijskamstra.media.FLVPlayerLiteController')
 		* 
 		* @param	$targetObj		a reference to a movie clip or object
 		* @param	$url			path to FLV file (example: '../flv/foobar.flv')
 		* @param	$obj			object with extra param (read mor about this in the comments on the top)
 		*/
-		public function FLVPlayerLiteControler( $targetObj:DisplayObjectContainer, $url:String, $obj:Object = null) {
+		public function FLVPlayerLiteController( $targetObj:DisplayObjectContainer, $url:String, $obj:Object = null) {
 			//trace ( '+ ' + LINKAGE_ID + ' class instantiated');
 			super($targetObj, $url, $obj);
 		}
@@ -99,15 +99,15 @@ package nl.matthijskamstra.media {
 			//FLVPlayerControler.loaderProgress_mc.width = 0;
 			
 			// setup controlers
-			FLVPlayerLiteControlerButton.onRelease (FLVPlayerControler.playBtn_mc , buttonActivateButton, 'play');
-			FLVPlayerLiteControlerButton.onRelease (FLVPlayerControler.pauseBtn_mc , buttonActivateButton, 'pause');
-			FLVPlayerLiteControlerButton.onRelease (FLVPlayerControler.soundBtn_mc , buttonActivateButton, 'playSound');
-			FLVPlayerLiteControlerButton.onRelease (FLVPlayerControler.soundOffBtn_mc , buttonActivateButton, 'stopSound');
+			FLVPlayerLiteControllerButton.onRelease (FLVPlayerControler.playBtn_mc , buttonActivateButton, 'play');
+			FLVPlayerLiteControllerButton.onRelease (FLVPlayerControler.pauseBtn_mc , buttonActivateButton, 'pause');
+			FLVPlayerLiteControllerButton.onRelease (FLVPlayerControler.soundBtn_mc , buttonActivateButton, 'playSound');
+			FLVPlayerLiteControllerButton.onRelease (FLVPlayerControler.soundOffBtn_mc , buttonActivateButton, 'stopSound');
 			
-			FLVPlayerLiteControlerButton.onRollover (FLVPlayerControler.playBtn_mc , buttonActivateButton, 'rolloverPlay');
-			FLVPlayerLiteControlerButton.onRollover (FLVPlayerControler.pauseBtn_mc , buttonActivateButton, 'rolloverPause');			
-			FLVPlayerLiteControlerButton.onRollover (FLVPlayerControler.soundBtn_mc , buttonActivateButton, 'rolloverPlaySound');
-			FLVPlayerLiteControlerButton.onRollover (FLVPlayerControler.soundOffBtn_mc , buttonActivateButton, 'rolloverStopSound');			
+			FLVPlayerLiteControllerButton.onRollover (FLVPlayerControler.playBtn_mc , buttonActivateButton, 'rolloverPlay');
+			FLVPlayerLiteControllerButton.onRollover (FLVPlayerControler.pauseBtn_mc , buttonActivateButton, 'rolloverPause');			
+			FLVPlayerLiteControllerButton.onRollover (FLVPlayerControler.soundBtn_mc , buttonActivateButton, 'rolloverPlaySound');
+			FLVPlayerLiteControllerButton.onRollover (FLVPlayerControler.soundOffBtn_mc , buttonActivateButton, 'rolloverStopSound');			
 			
 			// trace( "isAutostart: " + isAutostart);
 			if (isAutostart) {
@@ -219,16 +219,16 @@ package nl.matthijskamstra.media {
 		/**
 		* create a lite FLV player with controler
 		* 
-		* @usage   	import nl.matthijskamstra.media.FLVPlayerLiteControler; // import
-		*			FLVPlayerLiteControler.create ( this , 'flv/Final_Mov_Sequence.flv' );
-		* 			(read comments in 'nl.matthijskamstra.media.FLVPlayerLite' & 'nl.matthijskamstra.media.FLVPlayerLiteControler')
+		* @usage   	import nl.matthijskamstra.media.FLVPlayerLiteController; // import
+		*			FLVPlayerLiteController.create ( this , 'flv/Final_Mov_Sequence.flv' );
+		* 			(read comments in 'nl.matthijskamstra.media.FLVPlayerLite' & 'nl.matthijskamstra.media.FLVPlayerLiteController')
 		* 
 		* @param	$targetObj		a reference to a movie clip or object
 		* @param	$url			path to FLV file (example: '../flv/foobar.flv')
 		* @param	$obj			object with extra param (read mor about this in the comments on the top)
 		*/
 		public static function create ( $targetObj:DisplayObjectContainer , $url:String, $obj:Object=null):FLVPlayerLite {
-			return new FLVPlayerLiteControler ($targetObj, $url, $obj);
+			return new FLVPlayerLiteController ($targetObj, $url, $obj);
 		}
 		
 		//////////////////////////////////////// Listener ////////////////////////////////////////
@@ -247,7 +247,7 @@ package nl.matthijskamstra.media {
 			videoObj_vid.width		= vidWidth;
 			videoObj_vid.height 	= vidHeight;
 			
-			// extra data by the FLVPlayerLitecontroler
+			// extra data by the FLVPlayerLiteController
 			setupControler ();
 			
 		}
