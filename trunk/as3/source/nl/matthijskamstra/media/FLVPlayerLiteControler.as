@@ -1,28 +1,35 @@
 ﻿/**
-* FLVPlayerLiteControler (AS3), version 1.0
-*
-* Enter description here
-*
-* <pre>
-*  ____                   _      ____ 
-* |  __| _ __ ___    ___ | | __ |__  |
-* | |   | '_ ` _ \  / __|| |/ /    | |
-* | |   | | | | | || (__ |   <     | |
-* | |__ |_| |_| |_| \___||_|\_\  __| |
-* |____|                        |____|
-* 
-* </pre>
-*
-* @class  	: 	FLVPlayerLiteControler
-* @author 	:  	Matthijs C. Kamstra [mck]
-* @version 	:	1.0 - class creation (AS3)
-* @since 	:	8-5-2008 14:47 
-*
-* Changelog:
-*
-* 		v 1.0 [8-5-2008 14:47] - Initial release
-*
-* 
+FLVPlayerLiteControler (AS3), version 1.0
+
+Enter description here
+
+<pre>
+ ____                   _      ____ 
+|  __| _ __ ___    ___ | | __ |__  |
+| |   | '_ ` _ \  / __|| |/ /    | |
+| |   | | | | | || (__ |   <     | |
+| |__ |_| |_| |_| \___||_|\_\  __| |
+|____|                        |____|
+
+</pre>
+
+@class  	: 	FLVPlayerLiteControler
+@author 	:  	Matthijs C. Kamstra [mck]
+@version 	:	1.0 - class creation (AS3)
+@since 		:	8-5-2008 14:47 
+
+
+
+NOTES:
+	- this project is opensource: http://code.google.com/p/flvplayerlite/
+	- some features descibed here will not be working currently so visit the project homepage for detailed information
+	- visit my site: http://MatthijsKamstra.nl/blog
+	- all your base are belong to us
+	- will add 9KB to your .SWF (3KB from the FLVPlayerLite)
+
+CHANGELOG:
+ 		v 1.0 [2008-05-08] - Initial release
+
 */
 package nl.matthijskamstra.media {
 	
@@ -53,7 +60,7 @@ package nl.matthijskamstra.media {
 		* @param	$obj			object with extra param (read mor about this in the comments on the top)
 		*/
 		public function FLVPlayerLiteControler( $targetObj:DisplayObjectContainer, $url:String, $obj:Object = null) {
-			trace ( '+ ' + LINKAGE_ID + ' class instantiated');
+			//trace ( '+ ' + LINKAGE_ID + ' class instantiated');
 			super($targetObj, $url, $obj);
 		}
 		
@@ -61,8 +68,19 @@ package nl.matthijskamstra.media {
 		 * 
 		 */
 		private function setupControler () {
+			//trace( "\t|\t " + CLASS_NAME + " :: setupControler  "  );
 			
 			FLVPlayerControler = targetObj.getChildByName ('flvControler_mc');
+			var FLVPlayerLite = targetObj.getChildByName ('FLVPlayerLite');
+			
+			if (FLVPlayerControler == null) {
+				generateControler ();
+				return;
+			}
+			
+			targetObj.swapChildren(FLVPlayerControler as DisplayObject, FLVPlayerLite as DisplayObject);
+			
+			// get original width from loader
 			
 			// position is defined when the size of the movie is known (onMetaDataListener)
 			FLVPlayerControler.x = 0;
@@ -76,19 +94,27 @@ package nl.matthijskamstra.media {
 			FLVPlayerControler.totalTime_txt.x = videoObj_vid.width - 1 - (350 - 297);
 			
 			FLVPlayerControler.loaderSize_mc.width = FLVPlayerControler.currentTime_txt.x - 5 - FLVPlayerControler.loaderSize_mc.x
+			FLVPlayerControler.loaderBar_mc.width = 0;
+			FLVPlayerControler.loaderProgress_mc.width = (FLVpercentLoaded / 100) * FLVPlayerControler.loaderSize_mc.width ;
+			//FLVPlayerControler.loaderProgress_mc.width = 0;
 			
 			// setup controlers
-			FLVPlayerLiteControlerButton.create (FLVPlayerControler.playBtn_mc , buttonActivateButton, 'play');
-			FLVPlayerLiteControlerButton.create (FLVPlayerControler.pauseBtn_mc , buttonActivateButton, 'pause');
-			FLVPlayerLiteControlerButton.create (FLVPlayerControler.soundBtn_mc , buttonActivateButton, 'playSound');
-			FLVPlayerLiteControlerButton.create (FLVPlayerControler.soundOffBtn_mc , buttonActivateButton, 'stopSound');
+			FLVPlayerLiteControlerButton.onRelease (FLVPlayerControler.playBtn_mc , buttonActivateButton, 'play');
+			FLVPlayerLiteControlerButton.onRelease (FLVPlayerControler.pauseBtn_mc , buttonActivateButton, 'pause');
+			FLVPlayerLiteControlerButton.onRelease (FLVPlayerControler.soundBtn_mc , buttonActivateButton, 'playSound');
+			FLVPlayerLiteControlerButton.onRelease (FLVPlayerControler.soundOffBtn_mc , buttonActivateButton, 'stopSound');
+			
+			FLVPlayerLiteControlerButton.onRollover (FLVPlayerControler.playBtn_mc , buttonActivateButton, 'rolloverPlay');
+			FLVPlayerLiteControlerButton.onRollover (FLVPlayerControler.pauseBtn_mc , buttonActivateButton, 'rolloverPause');			
+			FLVPlayerLiteControlerButton.onRollover (FLVPlayerControler.soundBtn_mc , buttonActivateButton, 'rolloverPlaySound');
+			FLVPlayerLiteControlerButton.onRollover (FLVPlayerControler.soundOffBtn_mc , buttonActivateButton, 'rolloverStopSound');			
 			
 			// trace( "isAutostart: " + isAutostart);
 			if (isAutostart) {
 				FLVPlayerControler.playBtn_mc.visible = false;
 			}
 			if (isSoundOnStart) {
-				FLVPlayerControler.soundBtn_mc.visible = false;
+				FLVPlayerControler.soundBtn_mc.visible = true;
 			}
 			
 			/*	
@@ -109,38 +135,45 @@ package nl.matthijskamstra.media {
 			
 		}
 		
+		private function generateControler():void{
+			trace (':: no FLVPlayerControler, so it needs to be generated >> doesn\'t work yet')
+		}
+		
 		private function buttonActivateButton($id:String):void {
-			trace( "buttonActivateButton : " + buttonActivateButton );
+			//trace( "++ buttonActivateButton : " + buttonActivateButton );
 			//trace( "$id : " + $id );
 			switch ($id) {
 				case 'play': 
-					trace('play');
+					//trace('play');
 					playMedia();
 					FLVPlayerControler.playBtn_mc.visible = false;
 					break;
 				case 'pause': 
-					trace('pause');
+					//trace('pause');
 					pauseMedia();
 					FLVPlayerControler.playBtn_mc.visible = true;
 					break;
 				case 'playSound': 
-					trace('playSound');
+					//trace('playSound');
 					mute();
 					FLVPlayerControler.soundBtn_mc.visible = false;
 					break;
 				case 'stopSound': 
+					//trace('stopSound');
 					mute();
 					FLVPlayerControler.soundBtn_mc.visible = true;
-					trace('stopSound');
 					break;
-				case 0:
-					trace(0);
+				case 'rolloverPause': 
+					//trace('rolloverPause');
 					break;
-				case 1:
-					trace(1);
+				case 'rolloverPlay': 
+					//trace('rolloverPlay');
 					break;
-				case 2:
-					trace(2);
+				case 'rolloverStopSound': 
+					//trace('rolloverStopSound');
+					break;
+				case 'rolloverPlaySound': 
+					//trace('rolloverPlaySound');
 					break;
 				default:
 					trace( "case '" + $id + "': \n\ttrace('"+$id+"');\n\tbreak;");
@@ -149,6 +182,37 @@ package nl.matthijskamstra.media {
 		}
 		
 	
+		////////////////////////////////// start: FLV loading ///////////////////////////////////
+		
+		override public function onLoadProgress($percent:Number):void {
+			//trace( "\t|\t " + CLASS_NAME + " :: onLoadProgress -- $percent : " + $percent );
+			if (FLVPlayerControler != null) {
+				FLVPlayerControler.loaderProgress_mc.width = ($percent / 100) * FLVPlayerControler.loaderSize_mc.width;
+			}
+		}
+		
+		////////////////////////////////// end: FLV loading ///////////////////////////////////
+		
+		////////////////////////////////// start: FLV playhead ///////////////////////////////////
+		
+		override public function onPlayProgress($percent:Number, $currentTime:Number, $totalTime:Number):void {
+			//trace( "\t|\t " + CLASS_NAME + " :: onPlayProgress -- $percent : " + $percent + " | $currentTime : " + $currentTime + " | $totalTime : " + $totalTime );
+			if (FLVPlayerControler != null) {
+				FLVPlayerControler.loaderBar_mc.width = ($percent / 100) * FLVPlayerControler.loaderSize_mc.width;
+				FLVPlayerControler.currentTime_txt.text = timeNotation ($currentTime);
+				FLVPlayerControler.totalTime_txt.text = timeNotation ($totalTime);
+			}
+		}
+		
+		////////////////////////////////// end: FLV playhead ///////////////////////////////////
+		
+		private function timeNotation ($sec:Number):String {
+			var minutes = Math.floor ($sec / 60);
+			var seconds = Math.floor ($sec % 60);
+			if (minutes < 10) { minutes = "0" + minutes; }
+			if (seconds < 10) { seconds = "0" + seconds; }
+			return (minutes + ":" + seconds);
+		}
 		
 		/////////////////////////////////////// Static ///////////////////////////////////////
 		

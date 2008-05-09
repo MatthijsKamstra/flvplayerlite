@@ -111,7 +111,6 @@ NOTES:
 
 
 CHANGELOG:
-	
 	v0.1 [7-4-2008] - Initial release
 		
 */
@@ -163,11 +162,13 @@ package nl.matthijskamstra.media {
 		private var xPos				:Number = 0;
 		private var yPos				:Number = 0;
 		private var FLVPlayerName		:String = 'FLVPlayerLite';
+		public var FLVpercentLoaded		:Number = 0;		//percentage loaded of FLV
 		
 		private var onComplete			:Function; 			//The function that should be triggered when this tween has completed
 		private var onCompleteParams	:Array; 			//An array containing the parameters that should be passed to the this.onComplete when this tween has finished.
 		private var onCuePoint			:Function; 			//The function that should be triggered when a cuepoint is entered
 		private var onCuePointParams	:Array; 			//An array containing the parameters that should be passed to the this.onCuePoint when this tween has finished.
+		
 	
 		//static var pausedOnce			:Boolean = false;
 
@@ -215,6 +216,10 @@ package nl.matthijskamstra.media {
             ncVideo.addEventListener(NetStatusEvent.NET_STATUS, onNetStatusListener);
             ncVideo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityErrorListener);
             ncVideo.connect(null);
+			
+			// start checking loading and playhead
+			startLoadCheckingEngine (); // [mck] don't know for sure
+			startPlayheadTrackingEngine (); // [mck] don't know for sure
         }
 		
 		/////////////////////////////////////// start :: FLVPlayerLite Controlers ///////////////////////////////////////
@@ -314,6 +319,7 @@ package nl.matthijskamstra.media {
 			customClient.onPlayStatus = onPlayStatusListener;
 			
             nsVideo = new NetStream(ncVideo);
+            nsVideo.addEventListener(IOErrorEvent.IO_ERROR , onIOErrorListener);
             nsVideo.addEventListener(NetStatusEvent.NET_STATUS, onNetStatusListener);
             nsVideo.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
 			nsVideo.client = customClient;
@@ -328,51 +334,53 @@ package nl.matthijskamstra.media {
 				pauseMedia();
 			} 
         }
-
 		
-		function onFLVLoadProgress () : void {
+		////////////////////////////////// start: FLV loading ///////////////////////////////////
+		private function onFLVLoadProgress () : void {
 			var totalBytes:Number  	= nsVideo.bytesTotal;
 			var loadedBytes:Number  = nsVideo.bytesLoaded;
 			if (totalBytes > 4)	{
-				var pctLoaded:Number = Math.floor(loadedBytes/totalBytes*100);
-				//onLoadProgress(pctLoaded);
-				if (pctLoaded >= 100) {
-					// stopLoadCheckingEngine();
+				FLVpercentLoaded = Math.floor(loadedBytes / totalBytes * 100);
+				//trace( "FLVpercentLoaded : " + FLVpercentLoaded );
+				onLoadProgress(FLVpercentLoaded);
+				if (FLVpercentLoaded >= 100) {
+					stopLoadCheckingEngine();
 				}
 			}
 		}
-	
+		public function onLoadProgress($percent:Number):void {
+			trace( "\t|\t " + CLASS_NAME + " :: onLoadProgress -- $percent : " + $percent );
+		}
 		protected function startLoadCheckingEngine():void {
-			/*
-			loadCheckingEngine = new Object();
-			loadCheckingEngine.onEnterFrame = onFLVLoadProgress;
-			MovieClip.addListener(loadCheckingEngine);
-			*/
+			targetObj.addEventListener(Event.ENTER_FRAME, onEnterFrameLoadingListener);
 		}
-		
 		protected function stopLoadCheckingEngine():void {
-			//MovieClip.removeListener(loadCheckingEngine);
+			targetObj.removeEventListener(Event.ENTER_FRAME, onEnterFrameLoadingListener);
 		}	
-		
-		
-		protected function startPlayheadTrackingEngine():void {
-			/*			
-			trackingEngine = new Object();
-			trackingEngine.onEnterFrame =onPlayheadProgress;
-			MovieClip.addListener(trackingEngine);
-			*/		
+		private function onEnterFrameLoadingListener(e:Event):void {
+			onFLVLoadProgress ();
 		}
+		////////////////////////////////// end: FLV loading ///////////////////////////////////
 		
-		protected function stopPlayheadTrackingEngine():void{
-			//MovieClip.removeListener(trackingEngine);
-		}
-		
-		
-		function onPlayheadProgress () : void {
+		////////////////////////////////// start: FLV playhead ///////////////////////////////////
+		private function onPlayheadProgress () : void {
 			var nPercent:Number = 100 * nsVideo.time / nDuration;
-			//	onPlayProgress(Math.floor(nPercent));
+			onPlayProgress(Math.floor(nPercent), nsVideo.time, nDuration);
 		}
-	
+		public function onPlayProgress($percent:Number, $currentTime:Number, $totalTime:Number):void {
+			trace( "\t|\t " + CLASS_NAME + " :: onPlayProgress -- $percent : " + $percent + " | $currentTime : " + $currentTime + " | $totalTime : " + $totalTime );
+		}
+		protected function startPlayheadTrackingEngine():void {
+			targetObj.addEventListener(Event.ENTER_FRAME, onEnterFramePlayProgressListener);		
+		}
+		protected function stopPlayheadTrackingEngine():void{
+			targetObj.removeEventListener(Event.ENTER_FRAME, onEnterFramePlayProgressListener);
+		}
+		private function onEnterFramePlayProgressListener(e:Event):void {
+			onPlayheadProgress ();
+		}
+		////////////////////////////////// end: FLV playhead ///////////////////////////////////
+		
 		/**
 		 * kill every thing!!!
 		 */
@@ -467,8 +475,13 @@ package nl.matthijskamstra.media {
 			}
 		}
 		
+		private function onIOErrorListener(e:IOErrorEvent):void {
+			trace( "\t|\t onIOErrorListener : " + onIOErrorListener + "\te : " + e );
+			
+		}
+		
         private function onSecurityErrorListener(event:SecurityErrorEvent):void {
-            //trace("\t|\t onSecurityErrorListener: " + event);
+            trace("\t|\t onSecurityErrorListener: " + event);
         }
         
         private function asyncErrorHandler(event:AsyncErrorEvent):void {
@@ -490,7 +503,7 @@ package nl.matthijskamstra.media {
 			videoObj_vid.width		= vidWidth;
 			videoObj_vid.height 	= vidHeight;
 			
-			trace( "vidWidth : " + vidWidth + "\t - vidHeight : " + vidHeight );
+			//trace( "vidWidth : " + vidWidth + "\t - vidHeight : " + vidHeight );
 			
 		}
 		
