@@ -38,15 +38,15 @@ This function will receive the name and time of the cuepoint
 var __FLVPlayerLite1 = new FLVPlayerLite ( Container_mc, 'flv/foobar.flv', { onComplete:flvOnComplete , onCuePoint:flvOnCuePoint} );
 private function flvOnComplete():void { // trace( ":: flvOnComplete ::"); }
 private function flvOnCuePoint( $name:String, $time:Number, ...arg ):void {
-// trace( ":: flvOnCuePoint ::" );
-// trace( "$name : " + $name + ' - '+ typeof ($name));
-// trace( "$time : " + $time + ' - '+ typeof ($time));
-switch ($name) {
-	case 'foobar':
-		trace('<< foobar >>');
-		break;
-	default:
-		trace(">> " + $name);
+	// trace( ":: flvOnCuePoint ::" );
+	// trace( "$name : " + $name + ' - '+ typeof ($name));
+	// trace( "$time : " + $time + ' - '+ typeof ($time));
+	switch ($name) {
+		case 'foobar':
+			trace('<< foobar >>');
+			break;
+		default:
+			trace(">> " + $name);
 	}
 }
 }}}
