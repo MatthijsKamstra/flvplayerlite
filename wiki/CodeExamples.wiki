@@ -23,7 +23,7 @@ FLVPlayerLite.create ( flvContainer_mc, 'flv/foobar.flv' , {autoLoop:true} );
 }}}
 		
 
-Do you want more controle over your .FLV: in this case your movie doesn't start at once(autoPlay:false) and at the end of the .FLV (onComplete) a function will be called (example: "''flvOnComplete''").
+Do you want more controle over your .FLV: in this case your movie doesn't start at once(autoPlay:false) and at the end of the .FLV (onComplete) a function will be called (example: "'flvOnComplete'").
 		
 {{{
 import nl.matthijskamstra.media.FLVPlayerLite; // import
@@ -31,7 +31,7 @@ FLVPlayerLite.create ( player1Container_mc, 'flv/foobar.flv', { autoPlay:false ,
 private function flvOnComplete():void { // trace( ":: flvOnComplete ::"); }
 }}}		
 	
-You can also get the feedback on cuepoints in your .FLV:  at the end of the .FLV (onComplete) a function will be called (example: "''flvOnComplete''") and every cuepoint in the .FLV will call to a function (example: "''flvOnCuePoint''"). 
+You can also get the feedback on cuepoints in your .FLV:  at the end of the .FLV (onComplete) a function will be called (example: "'flvOnComplete'") and every cuepoint in the .FLV will call to a function (example: "''flvOnCuePoint''"). 
 This function will receive the name and time of the cuepoint		
 		
 {{{
