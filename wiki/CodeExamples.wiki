@@ -1,14 +1,6 @@
 #labels Featured,Phase-Deploy
 Different methods to use FLVPlayerLite.
 
-= Introduction =
-
-How to use....
-
-= Usage =
-
-
-
 = Code examples =
 Load a .FLV on a timeline
 		
