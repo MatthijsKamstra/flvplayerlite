@@ -1,24 +1,7 @@
 ﻿/**
 * FLVPlayerLiteControllerButton (AS3), version 1.0
 *
-		FLVPlayerLiteControllerButton.onRelease (FLVPlayerControler.playBtn_mc , buttonActivateButton, 'play');
-		FLVPlayerLiteControllerButton.onRollover (FLVPlayerControler.playBtn_mc , buttonActivateButton, 'rolloverPlay');
-		
-		private function buttonActivateButton($id:String):void {
-			//trace( "++ buttonActivateButton : " + buttonActivateButton );
-			//trace( "$id : " + $id );
-			switch ($id) {
-				case 'play': 
-					trace('play');
-					break;
-				case 'rolloverPlay': 
-					trace('rolloverPlay');
-					break;
-				default:
-					trace( "case '" + $id + "': \n\ttrace('"+$id+"');\n\tbreak;");
-			}
-		}
-			
+* Enter description here
 *
 * <pre>
 *  ____                   _      ____ 
