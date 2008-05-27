@@ -105,13 +105,14 @@ EXAMPLES:
 NOTES:
 	- this project is opensource: http://code.google.com/p/flvplayerlite/
 	- some features descibed here will not be working currently so visit the project homepage for detailed information
-	- visit my site: http://MatthijsKamstra.nl/blog
+	- visit my website: http://www.MatthijsKamstra.nl/blog
 	- all your base are belong to us
 	- will add 3KB to your .SWF
 
 
 CHANGELOG:
-	v0.1 [7-4-2008] - Initial release
+	v0.2 [27-05-2008] - change video in existing player
+	v0.1 [07-04-2008] - Initial release
 		
 */
 package nl.matthijskamstra.media {
@@ -135,14 +136,12 @@ package nl.matthijskamstra.media {
 		public static var targetObj:DisplayObjectContainer;	
 		
 		//compulsory vars passed via constructor
-		//private var url				:String;			//flv file that is to be played
 		private var fileURL				:String; 			//flv file that is to be played
 		  
 		//optional switches 
 		public var isLooping			:Boolean = false;	// enables video looping
 		public var isAutostart			:Boolean = true;	// the video will start playing
 		public var isSoundOnStart		:Boolean = true;	// determines whether audio is muted at the begining
-		//public var isSoundOnStart		:Boolean = false;	// determines whether audio is muted at the begining
 		
 		//configurable public buffering values	
 		public var minBufferNumber		:Number = 2;		//default number of seconds of playback available before playing can start
@@ -158,6 +157,7 @@ package nl.matthijskamstra.media {
 		public var videoObj_vid			:Video;	
 		static var trackingEngine		:Object;
 		static var loadCheckingEngine	:Object;
+
 		// extra object values 
 		private var xPos				:Number = 0;
 		private var yPos				:Number = 0;
@@ -334,6 +334,19 @@ package nl.matthijskamstra.media {
 				pauseMedia();
 			} 
         }
+		
+		/**
+		 * change the url but not create a new player
+		 * 
+ 		 * @usage   	import nl.matthijskamstra.media.FLVPlayerLite; // import
+		 *				var myFLVPlayerLite:FLVPlayerLite = new FLVPlayerLite ( );
+		 * 				myFLVPlayerLite.changeVideo (flvPath);
+		 * @param	$url		path to FLV file (example: '../flv/foobar.flv')
+		 */
+		public function changeVideo ($url:String=null):void {
+			if ($url == null) { return; }
+			nsVideo.play($url);
+		}
 		
 		////////////////////////////////// start: FLV loading ///////////////////////////////////
 		private function onFLVLoadProgress () : void {
