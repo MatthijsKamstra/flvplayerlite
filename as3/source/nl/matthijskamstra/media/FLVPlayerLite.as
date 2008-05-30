@@ -1,6 +1,6 @@
 ﻿/**
 
-FLVPlayerLite (AS3), version 0.1
+FLVPlayerLite (AS3), version 0.2
 
 <pre>
  ____                   _      ____ 
@@ -14,7 +14,6 @@ FLVPlayerLite (AS3), version 0.1
 
 @class  	: 	FLVPlayerLite
 @author 	:  	Matthijs C. Kamstra [mck]
-@version 	:	0.1 - class creation (AS3)
 @since 		:	7-4-2008 17:07 
 
 
@@ -126,7 +125,7 @@ package nl.matthijskamstra.media {
 
     public class FLVPlayerLite extends Sprite {
 		
-		public static var version:Number = 0.1;
+		public static var version:Number = 0.2;
 		
 		// Constants:
 		public static var CLASS_REF = nl.matthijskamstra.media.FLVPlayerLite;
