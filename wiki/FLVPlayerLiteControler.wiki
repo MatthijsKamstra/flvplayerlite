@@ -13,5 +13,5 @@ That's not true, I have no idea how to fix this.. But you don't *need* to restar
 
 = Details =
 
-
-
+flvplayerlite_controler
+http://code.google.com/p/flvplayerlite/source/browse/trunk/as3/deploy/img/flvplayerlite_controler.jpg
