@@ -14,4 +14,9 @@ That's not true, I have no idea how to fix this.. But you don't *need* to restar
 = Details =
 
 flvplayerlite_controler
-http://code.google.com/p/flvplayerlite/source/browse/trunk/as3/deploy/img/flvplayerlite_controler.jpg
+
+http://flvplayerlite.googlecode.com/files/flvplayerlite_controler.jpg
+
+flvplayerlite_library
+
+http://flvplayerlite.googlecode.com/files/flvplayerlite_library.jpg
