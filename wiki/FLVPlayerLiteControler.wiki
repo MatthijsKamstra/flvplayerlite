@@ -1,0 +1,17 @@
+#summary An easy way to make a FLVPlayerLite controler in Flash-IDE.
+#labels Featured,Phase-Design,Phase-Deploy
+
+= Introduction =
+
+A .mxp is an installation file for Adobe Extension Manager. This command can be used in Flash-IDE after you install it (download and double click it).
+It's used to create a default FLVPlayerLite controler which you can easy customize.
+
+More information about the *Adobe Extension Manager* visit: http://www.adobe.com/exchange/em_download/
+
+For some reason the Adobe Extension Manager want you to restart Flash.
+That's not true, I have no idea how to fix this.. But you don't *need* to restart, but of course you always may restart if you feel the need :)
+
+= Details =
+
+
+
