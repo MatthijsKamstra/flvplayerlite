@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<macromedia-extension name="[mck] FLVPlayerLite controler" version="1.0" type="command" requires-restart="false">
+
+	<!-- Describe the author -->
+
+	<author name="Matthijs C. Kamstra aka [mck]" />
+
+	<!-- List the required/compatible products -->
+
+	<products>
+		<product name="Flash" version="6" primary="true" />
+	</products>
+
+	<!-- Describe the extension -->
+
+	<description>
+		<![CDATA[Create a complete controler-movieclip on the timeline and library. <br>Controler contains: play, pause, sound on, sound of buttons, progressbar and loadingbar<br><br>Easy to use with FLVPlayerLite but also with other classes that need a loader, controler, etc. Bases movieClip which can be used to customize your own player.<br><br>Download and more information see http://code.google.com/p/flvplayerlite]]>
+	</description>
+
+	<!-- Describe where the extension shows in the UI of the product -->
+
+	<ui-access>
+		<![CDATA[This command is available from Commands > [mck] FLVPlayerLite controler.jsfls]]>
+	</ui-access>
+
+	<!-- Describe the files that comprise the extension -->
+
+	<files>
+		<file name="[mck] FLVPlayerLite controler.jsfl" destination="$flash/Commands" />
+	</files>
+
+</macromedia-extension>
