@@ -14,7 +14,11 @@ FLVPlayerLite (AS3), version 0.2
 
 @class  	: 	FLVPlayerLite
 @author 	:  	Matthijs C. Kamstra [mck]
+<<<<<<< .mine
+@since 		:	7-4-2008 17:07  
+=======
 @since 		:	7-4-2008 17:07 
+>>>>>>> .r36
 
 
 DESCRIPTION:
