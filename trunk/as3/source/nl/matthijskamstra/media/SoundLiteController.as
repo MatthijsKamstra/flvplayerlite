@@ -1,5 +1,5 @@
 ﻿/**
-SoundController (AS3), version 1.1
+SoundLiteController (AS3), version 1.1
 
 Enter description here
 
@@ -13,19 +13,19 @@ Enter description here
 
 </pre>
 
-@class  	: 	SoundController
+@class  	: 	SoundLiteController
 @author 	:  	Matthijs C. Kamstra [mck]
 @version 	:	1.1 - class creation (AS3)
 @since 		:	8-5-2008 14:47 
 
 DESCRIPTION:
-	Every feature of SoundBg will also work here
-	For more detailed information see nl.matthijskamstra.media.soundBg.as
+	Every feature of SoundLite will also work here
+	For more detailed information see nl.matthijskamstra.media.soundLite.as
 
 EXAMPLES:
 	loop the soundfile 2 times
-		import nl.matthijskamstra.media.SoundController; // import
-		var _sc:SoundController = new SoundController (controllerMC, "mp3/donuts_music_loop.mp3" ,{loopTimes:2});
+		import nl.matthijskamstra.media.SoundLiteController; // import
+		var _sc:SoundLiteController = new SoundLiteController (controllerMC, "mp3/donuts_music_loop.mp3" ,{loopTimes:2});
 		
 NOTES:
 	- some features descibed here will not be working, yet
@@ -33,6 +33,7 @@ NOTES:
 	- all your base are belong to us
 
 CHANGELOG:
+ 		v 1.2 [29-08-2008 15:15] 	- changed name of class from SoundController to SoundLiteController
  		v 1.1 [28-08-2008 16:07] 	- Based upon FLVPlayerLiteController and 
  		v 1.0 [2008-05-08] 			- Initial release
 
@@ -42,12 +43,12 @@ package nl.matthijskamstra.media {
 	import flash.display.*;
 	import flash.events.*;	
 
-	public class SoundController extends SoundBg {
+	public class SoundLiteController extends SoundLite {
 		
 		// Constants:
-		public static var CLASS_REF = nl.matthijskamstra.media.SoundController;
-		public static var CLASS_NAME : String = "SoundController";
-		public static var LINKAGE_ID : String = "nl.matthijskamstra.media.SoundController";
+		public static var CLASS_REF = nl.matthijskamstra.media.SoundLiteController;
+		public static var CLASS_NAME : String = "SoundLiteController";
+		public static var LINKAGE_ID : String = "nl.matthijskamstra.media.SoundLiteController";
 		
 		// var
 		private var mediaController:Object;
@@ -55,14 +56,14 @@ package nl.matthijskamstra.media {
 		/**
 		* Constructor: create a sound-controler
 		* 
-		* @usage   	import nl.matthijskamstra.media.SoundController; // import
-		*			var _sc:SoundController = new SoundController (  "mp3/donuts_music_loop.mp3" );
+		* @usage   	import nl.matthijskamstra.media.SoundLiteController; // import
+		*			var _sc:SoundLiteController = new SoundLiteController (  "mp3/donuts_music_loop.mp3" );
 		* 
 		* @param	$targetObj		a reference to a movie clip or object
 		* @param	$fileURL		location of mp3 file (example: 'mp3/foobar.mp3')
 		* @param	$vars			extra vars (like autoplay, ...)
 		*/
-		public function SoundController( $targetObj:DisplayObjectContainer, $fileURL:String, $vars:Object = null) {
+		public function SoundLiteController( $targetObj:DisplayObjectContainer, $fileURL:String, $vars:Object = null) {
 			// trace ( '+ ' + LINKAGE_ID + ' class instantiated');
 			super($fileURL, $vars);
 			setupControler ($targetObj);
@@ -72,7 +73,7 @@ package nl.matthijskamstra.media {
 		 * setup the buttons
 		 */
 		private function setupControler ($targetObj:DisplayObjectContainer) {
-			//trace( "SoundController.setupControler > $targetObj : " + $targetObj );
+			//trace( "SoundLiteController.setupControler > $targetObj : " + $targetObj );
 			
 			mediaController = $targetObj as MovieClip;
 			if (mediaController == null) {
@@ -107,7 +108,7 @@ package nl.matthijskamstra.media {
 		 * a general function for the buttons
 		 * @param	$id
 		 */
-		private function buttonActivateButton($id:String):void {
+		public function buttonActivateButton($id:String):void {
 			switch ($id) {
 				case 'pause': 
 					//trace('buttonActivateButton >> pause');
@@ -156,14 +157,14 @@ package nl.matthijskamstra.media {
 		/**
 		* create a lite FLV player with controler
 		* 
-		* @usage   	import nl.matthijskamstra.media.SoundController; // import
-		*			SoundController.create ( this , 'mp3/foobar.mp3' );
+		* @usage   	import nl.matthijskamstra.media.SoundLiteController; // import
+		*			SoundLiteController.create ( this , 'mp3/foobar.mp3' );
 		* @param	$targetObj		a reference to a movie clip or object
 		* @param	$fileURL		path to FLV file (example: '../mp3/foobar.mp3')
 		* @param	$vars			object with extra param
 		*/
-		public static function create ( $targetObj:DisplayObjectContainer, $fileURL:String, $vars:Object = null):SoundBg {
-			return new SoundController ($targetObj, $fileURL, $vars);
+		public static function create ( $targetObj:DisplayObjectContainer, $fileURL:String, $vars:Object = null):SoundLite {
+			return new SoundLiteController ($targetObj, $fileURL, $vars);
 		}
 	
 		

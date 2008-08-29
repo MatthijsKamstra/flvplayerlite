@@ -1,5 +1,5 @@
 ﻿/**
-SoundBg (AS3), version 1.0
+SoundLite (AS3), version 1.1
 
 <pre>
  ____                   _      ____ 
@@ -12,9 +12,9 @@ SoundBg (AS3), version 1.0
 </pre>
 
 
-@class  	: 	SoundBg
+@class  	: 	SoundLite
 @author 	:  	Matthijs C. Kamstra [mck]
-@version 	:	1.0 - class creation (AS3)
+@version 	:	1.1 - class creation (AS3)
 @since 		:	28-8-2008 12:30 
  
 
@@ -23,10 +23,10 @@ DESCRIPTION:
 
 ARGUMENTS:
 	1) $fileURL		location of mp3 file (example: 'mp3/foobar.mp3')
-	2)	$vars		An object containing param that you want to use with the creation of the SoundBg
+	2)	$vars		An object containing param that you want to use with the creation of the SoundLite
 						PLAYING:
 							autoPlay			: start automatic play 	(default true)
-							loopTimes			: sound is loped x times (default int.MAX_VALUE == 2147483647) [not functional yet]
+							loopTimes			: sound is loped x times (default int.MAX_VALUE == 2147483647)
 						SPECIAL PROPERTIES:
 							onPosition			: feedback on what position the playhead is (also needed for pause)
 							onTag				: when the id3 tags are received
@@ -37,12 +37,12 @@ ARGUMENTS:
 EXAMPLES: 
 	Load a background sound
 		
-		import nl.matthijskamstra.media.SoundBg; // import
-		var soundBG:soundBg = new SoundBg ("mp3/donuts_music_loop.mp3" );
+		import nl.matthijskamstra.media.SoundLite; // import
+		var _SoundLite:SoundLite = new SoundLite ("mp3/donuts_music_loop.mp3" );
 		
 		or 
 		
-		var soundBG:SoundBg = SoundBg.create ("mp3/donuts_music_loop.mp3" ,{isAutoPlay:false} ); 
+		var _SoundLite:SoundLite = SoundLite.create ("mp3/donuts_music_loop.mp3" ,{isAutoPlay:false} ); 
 
 NOTES:
 	- visit my website: http://www.MatthijsKamstra.nl/blog
@@ -50,6 +50,7 @@ NOTES:
 	- all your base are belong to us
 
 CHANGELOG:
+	v 1.1 [29-8-2008 13:40] - changed name from SoundBg to SoundLite 
 	v 1.0 [28-8-2008 12:30] - Initial release
 		
 */
@@ -67,15 +68,15 @@ package nl.matthijskamstra.media {
 	
 	import flash.media.SoundTransform;
 	
-	public class SoundBg {
+	public class SoundLite {
 		
 		// Constants:
-		public static var CLASS_REF = nl.matthijskamstra.media.SoundBg;
-		public static var CLASS_NAME : String = "SoundBg";
-		public static var LINKAGE_ID : String = "nl.matthijskamstra.media.SoundBg";
+		public static var CLASS_REF = nl.matthijskamstra.media.SoundLite;
+		public static var CLASS_NAME : String = "SoundLite";
+		public static var LINKAGE_ID : String = "nl.matthijskamstra.media.SoundLite";
 		// vars
 		
-		public static var version:Number = 1.0;
+		public static var version:Number = 1.1;
 		
         private var positionTimer		:Timer;
 		private var isSoundPlaying		:Boolean;		
@@ -85,20 +86,20 @@ package nl.matthijskamstra.media {
         public var mySoundChannel		:SoundChannel 	= new SoundChannel();		
 		public var vars					:Object; 								// Variables (holds things like autoplay)
 		public var isAutoPlay			:Boolean 		= true;					// default isAutoPlay on
-		public var loopTimes			:int	 		= int.MAX_VALUE;		// sound is loped x times (default int.MAX_VALUE == 2147483647)
+		public var loopTimes			:int	 		= int.MAX_VALUE;		// sound is looped x times (default int.MAX_VALUE == 2147483647)
 		public var pauseTime			:Number;								// if pause is pressed use this to start play again
 
 		
 		/**
 		* Constructor: create a background sound
 		* 
-		* @usage 		import nl.matthijskamstra.media.SoundBg; // import
-		*				var soundBG:soundBg = new SoundBg ("mp3/donuts_music_loop.mp3" );
+		* @usage 		import nl.matthijskamstra.media.SoundLite; // import
+		*				var _SoundLite:SoundLite = new SoundLite ("mp3/donuts_music_loop.mp3" );
 		* @param	$fileURL		location of mp3 file (example: 'mp3/foobar.mp3')
 		* @param	$vars			extra vars (like autoplay, ...)
 		*/
-		public function SoundBg($fileURL:String , $vars:Object = null) {
-			//trace( "SoundBg.SoundBg > $fileURL : " + $fileURL + ", $vars : " + $vars );
+		public function SoundLite($fileURL:String , $vars:Object = null) {
+			//trace( "SoundLite.SoundLite > $fileURL : " + $fileURL + ", $vars : " + $vars );
 			if ( $fileURL == null ) { return; }
 			
 			if ($vars != null) {
@@ -134,33 +135,55 @@ package nl.matthijskamstra.media {
 		//////////////////////////////////////// Sound Controllers ////////////////////////////////////////
 		
 		public function stop () {
-			//trace( "SoundBg.stop" );
+			//trace( "SoundLite.stop" );
 			pauseTime = 0;
 			mySoundChannel.stop();
+			isSoundPlaying = false;
 		}
-		public function play () {
-			//trace( "SoundBg.play" );
-			mySoundChannel = mySound.play(pauseTime, this.loopTimes );
+		public function play ($skipMs:Number = NaN) {
+			//trace( "SoundLite.play" );
+			if (!isSoundPlaying) {
+				if (!isNaN ($skipMs)) { pauseTime = $skipMs; }
+				mySoundChannel = mySound.play(pauseTime, this.loopTimes );
+				isSoundPlaying = true;
+			}
 		}
 		public function pause () {
-			//trace( "SoundBg.pause" );
+			//trace( "SoundLite.pause" );
 			pauseTime = mySoundChannel.position;
 			mySoundChannel.stop();
+			isSoundPlaying = false;
 		}
 		public function rewind () {
-			//trace( "SoundBg.rewind" );
+			//trace( "SoundLite.rewind" );
 			mySoundChannel = mySound.play(0, this.loopTimes );
 		}
 		public function forward () {
-			//trace( "SoundBg.forward" );
+			//trace( "SoundLite.forward" );
 		}
+		
+		
+		//////////////////////////////////////// getter/setters ////////////////////////////////////////
+		
+		/**
+		* import nl.matthijskamstra.media.SoundLite; // import
+		* set: 		var _soundLite:SoundLite = new SoundLite ();
+		*			_soundLite.trackPosition = $value ;
+		* get:		var _soundLite:SoundLite = new SoundLite ();
+		*			trace( "_soundLite.trackPosition : " + _soundLite.trackPosition );
+		*/
+		public function set trackPosition( $value )  { pauseTime = $value ; }
+		public function get trackPosition() { return mySoundChannel.position; }
+		
+		public function get trackTotal() { return mySound.length; }
+		
 		
 		
 		//////////////////////////////////////// Handlers ////////////////////////////////////////		
 		
 		
         public function positionTimerHandler(e:TimerEvent):void {
-			//trace( "SoundBg.positionTimerHandler > e : " + e );
+			//trace( "SoundLite.positionTimerHandler > e : " + e );
             //trace("positionTimerHandler: " + mySoundChannel.position.toFixed(0) + ' ms (millisecond)');
 			if (this.vars != null && this.vars.onPosition != null) {
 				this.vars.onPosition.apply(null , [mySoundChannel.position.toFixed(0)]);
@@ -168,14 +191,14 @@ package nl.matthijskamstra.media {
         }
 
         private function completeHandler(e:Event):void {
-			// trace( "SoundBg.completeHandler > e : " + e );
+			// trace( "SoundLite.completeHandler > e : " + e );
 			if (this.vars != null && this.vars.onComplete != null) {
 				this.vars.onComplete.apply(null);
 			}
         }
 
 		private function id3Handler(e:Event):void {
-			//trace( "SoundBg.id3Handler > e : " + e );
+			//trace( "SoundLite.id3Handler > e : " + e );
 			if (this.vars != null && this.vars.onTag != null && !isTagSet) {	
 				isTagSet = true;
 				var id3:ID3Info = mySound.id3;
@@ -192,19 +215,19 @@ package nl.matthijskamstra.media {
         }
 
         private function ioErrorHandler(e:Event):void {
-			trace( "SoundBg.ioErrorHandler > e : " + e );
+			trace( "SoundLite.ioErrorHandler > e : " + e );
 			positionTimer.stop();
         }
 
         public function progressHandler(e:ProgressEvent):void {
-			//trace( "SoundBg.progressHandler > e : " + e );
+			//trace( "SoundLite.progressHandler > e : " + e );
 			if (this.vars != null && this.vars.onProgress != null) {
 				this.vars.onProgress.apply(null, [(e.bytesLoaded / e.bytesTotal)]);
 			}
         }
 
         private function soundCompleteHandler(e:Event):void {
-			trace( "SoundBg.soundCompleteHandler > e : " + e );
+			trace( "SoundLite.soundCompleteHandler > e : " + e );
 			positionTimer.stop();
         }
 		
@@ -213,13 +236,13 @@ package nl.matthijskamstra.media {
 	
 		/**
 		 * static function to create a backgroun sound
-		 * @usage		var soundBG:SoundBg = SoundBg.create ('mp3/donuts_music_loop.mp3'); 
+		 * @usage		var _SoundLite:SoundLite = SoundLite.create ('mp3/donuts_music_loop.mp3'); 
 		 * 
 		 * @param	$fileURL		location of mp3 file (example: 'mp3/foobar.mp3')
 		 * @param	$vars			extra vars (like autoplay, ...)
 		 */
-		public static function create ($fileURL:String, $vars:Object = null ):SoundBg{
-			return new SoundBg ($fileURL, $vars );
+		public static function create ($fileURL:String, $vars:Object = null ):SoundLite{
+			return new SoundLite ($fileURL, $vars );
 		}
 		
 		//////////////////////////////////////// Listener ////////////////////////////////////////
