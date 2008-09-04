@@ -1,5 +1,5 @@
 ﻿/**
-* SoundMain (AS3), version 1.0
+* SoundLiteMain (AS3), version 1.0
 *
 * Enter description here
 *
@@ -13,7 +13,7 @@
 * 
 * </pre>
 *
-* @class  	: 	SoundMain
+* @class  	: 	SoundLiteMain
 * @author 	:  	Matthijs C. Kamstra [mck]
 * @version 	:	1.0 - class creation (AS3)
 * @since 	:	28-8-2008 11:44 
@@ -29,12 +29,12 @@ package nl.matthijskamstra.media {
 	import flash.display.*;
 	import flash.events.*;	
 
-	public class SoundMain extends MovieClip {
+	public class SoundLiteMain extends MovieClip {
 		
 		// Constants:
-		public static var CLASS_REF = nl.matthijskamstra.media.SoundMain;
-		public static var CLASS_NAME : String = "SoundMain";
-		public static var LINKAGE_ID : String = "nl.matthijskamstra.media.SoundMain";
+		public static var CLASS_REF = nl.matthijskamstra.media.SoundLiteMain;
+		public static var CLASS_NAME : String = "SoundLiteMain";
+		public static var LINKAGE_ID : String = "nl.matthijskamstra.media.SoundLiteMain";
 		// vars
 		public static var targetObj:DisplayObjectContainer;	
 		private var bgSoundLiteController:SoundLiteController;
@@ -43,28 +43,28 @@ package nl.matthijskamstra.media {
 		/**
 		* Constructor
 		* 
-		* @usage   	import nl.matthijskamstra.media.SoundMain; // import
-		*			var __SoundMain:SoundMain = new SoundMain ( this );
+		* @usage   	import nl.matthijskamstra.media.SoundLiteMain; // import
+		*			var __SoundLiteMain:SoundLiteMain = new SoundLiteMain ( this );
 		* @param	$targetObj		a reference to a movie clip or object
 		*/
-		public function SoundMain( $targetObj:DisplayObjectContainer = null ) {
+		public function SoundLiteMain( $targetObj:DisplayObjectContainer = null ) {
 			//trace ( '+ ' + LINKAGE_ID + ' class instantiated');
 			targetObj = ($targetObj == null) ? this : $targetObj;
-			initSoundMain ( targetObj ) ;
+			initSoundLiteMain ( targetObj ) ;
 		}
 		
 		//////////////////////////////////////// static ////////////////////////////////////////		
 
 		/**
-		* initSoundMain used to jumpstart everything
+		* initSoundLiteMain used to jumpstart everything
 		* 
-		* @usage   	import nl.matthijskamstra.media.SoundMain; // import
-		*			var __SoundMain:SoundMain = new SoundMain ();
-		*			__SoundMain.initSoundMain( this );
+		* @usage   	import nl.matthijskamstra.media.SoundLiteMain; // import
+		*			var __SoundLiteMain:SoundLiteMain = new SoundLiteMain ();
+		*			__SoundLiteMain.initSoundLiteMain( this );
 		* @param	$targetObj		a reference to a movie clip or object
 		*/
-		public function initSoundMain( $targetObj:DisplayObjectContainer ) {
-			//trace( "SoundMain.initSoundMain > $targetObj : " + $targetObj );
+		public function initSoundLiteMain( $targetObj:DisplayObjectContainer ) {
+			//trace( "SoundLiteMain.initSoundLiteMain > $targetObj : " + $targetObj );
 			// var soundBG:SoundLite = SoundLite.create ("mp3/donuts_music_loop.mp3", { isAutoPlay:true, onProgress:onProgressHandler, onComplete:onCompleteHandler, onTag:onTagHandler } ); 
 			
 			Button.onRelease (MovieClip($targetObj).soundBtn_mc , soundOnHandler );
@@ -77,6 +77,7 @@ package nl.matthijskamstra.media {
 			var controller1MC = $targetObj.getChildByName ('sound1_mc');
 			var controller2MC = $targetObj.getChildByName ('sound2_mc');
 			var controller3MC = $targetObj.getChildByName ('sound3_mc');
+			
 			var _sc1:SoundLiteController = new SoundLiteController (controller1MC, "mp3/donuts_loop_langzaam.mp3" , {  autoPlay:false} );
 			var _sc2:SoundLiteController = new SoundLiteController (controller2MC, "mp3/donuts_loop_medium.mp3" , {  autoPlay:false } );
 			var _sc3:SoundLiteController = new SoundLiteController (controller3MC, "mp3/donuts_loop_snel.mp3" , {  autoPlay:false  } );
@@ -84,49 +85,53 @@ package nl.matthijskamstra.media {
 			
 			
 			//_soundLiteMixer = new SoundLiteMixer (["mp3/donuts_loop_langzaam.mp3", "mp3/donuts_loop_medium.mp3", "mp3/donuts_loop_snel.mp3"]);
-			_soundLiteMixer = new SoundLiteMixer (["mp3/donuts_loop_langzaam_01.mp3", "mp3/donuts_loop_langzaam_02.mp3", "mp3/donuts_loop_langzaam_03.mp3"]);
+			_soundLiteMixer = new SoundLiteMixer (["mp3/kick.mp3", "mp3/kick_snare.mp3", "mp3/kick_snare_hihat.mp3", "mp3/kick_snare_hihat_bass.mp3", "mp3/kick_snare_hihat_bass_nasty.mp3", "mp3/kick_snare_hihat_bass_nasty_dingetje.mp3"],5);		
+
 			
 			
 			Button.onRelease (MovieClip($targetObj).btn1_mc, soundMixerHandler, 0 );
 			Button.onRelease (MovieClip($targetObj).btn2_mc, soundMixerHandler, 1 );
 			Button.onRelease (MovieClip($targetObj).btn3_mc, soundMixerHandler, 2 );
+			Button.onRelease (MovieClip($targetObj).btn4_mc, soundMixerHandler, 3 );
+			Button.onRelease (MovieClip($targetObj).btn5_mc, soundMixerHandler, 4 );
+			Button.onRelease (MovieClip($targetObj).btn6_mc, soundMixerHandler, 5 );
 			
 			
 		}
 		
 		private function soundMixerHandler($id:uint):void {
-			trace( "SoundMain.soundMixerHandler > $id : " + $id );
+			trace( "SoundLiteMain.soundMixerHandler > $id : " + $id );
 			_soundLiteMixer.activateTrack ($id);
 		}
 		
 		//////////////////////////////////////// Listener/Handler ////////////////////////////////////////		
 		
 		private function soundOffHandler():void {
-			//trace( "SoundMain.soundOffHandler" );
+			//trace( "SoundLiteMain.soundOffHandler" );
 			bgSoundLiteController.buttonActivateButton('pause');
 		}
 		
 		private function soundOnHandler():void {
-			//trace( "SoundMain.soundOnHandler" );
+			//trace( "SoundLiteMain.soundOnHandler" );
 			bgSoundLiteController.buttonActivateButton('play');
 		}
 		
 		
 		
 		private function onTagHandler($id3):void {
-			trace( "SoundMain.onTagHandler > $id3 : " + $id3 );
+			trace( "SoundLiteMain.onTagHandler > $id3 : " + $id3 );
 			trace ("Artist: " + $id3.artist );
 			trace ("Song name: " + $id3.songName );
 			trace ("Album: " + $id3.album ); 
 		}		
 		
 		private function onCompleteHandler():void {
-			trace( "SoundMain.onCompleteHandler" );
+			trace( "SoundLiteMain.onCompleteHandler" );
 			
 		}
 		
 		private function onProgressHandler(i):void {
-			trace( "SoundMain.onProgressFunc > i : " + i );
+			trace( "SoundLiteMain.onProgressFunc > i : " + i );
 			
 		}
 		

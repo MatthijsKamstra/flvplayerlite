@@ -66,14 +66,20 @@ package nl.matthijskamstra.media {
 			
 			var totalMS:Number = (soundTrackArray[activeTrack] as SoundLite).trackTotal
 			var skipMs:Number =  (soundTrackArray[activeTrack] as SoundLite).trackPosition ;
-			trace( "skipMs : " + skipMs + "\t|\t totalMS : " + totalMS );
+			trace( "#1 - skipMs : " + skipMs + " ms\t|\t totalMS : " + totalMS + ' ms');
 
+			if (skipMs > totalMS) {
+				skipMs = skipMs - (Math.floor(skipMs / totalMS) * totalMS);
+			}
 			
-			//(soundTrackArray[activeTrack] as SoundLite).pause();
-			(soundTrackArray[activeTrack] as SoundLite).stop();
-			//(soundTrackArray[$id] as SoundLite).play(skipMs);
-			(soundTrackArray[$id] as SoundLite).play();
+			trace( "#2 - skipMs : " + skipMs + " ms\t|\t totalMS : " + totalMS + ' ms');
 			
+			(soundTrackArray[activeTrack] as SoundLite).pause();
+			//(soundTrackArray[activeTrack] as SoundLite).stop();
+			(soundTrackArray[$id] as SoundLite).play(skipMs);
+			//(soundTrackArray[$id] as SoundLite).play();
+			
+			skipMs = 0;
 			
 			activeTrack = $id;
 		}
