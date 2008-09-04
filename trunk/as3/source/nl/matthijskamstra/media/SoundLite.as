@@ -1,5 +1,5 @@
 ﻿/**
-SoundLite (AS3), version 1.1
+SoundLite (AS3), version 1.2
 
 <pre>
  ____                   _      ____ 
@@ -14,7 +14,7 @@ SoundLite (AS3), version 1.1
 
 @class  	: 	SoundLite
 @author 	:  	Matthijs C. Kamstra [mck]
-@version 	:	1.1 - class creation (AS3)
+@version 	:	1.2 - class creation (AS3)
 @since 		:	28-8-2008 12:30 
  
 
@@ -50,15 +50,17 @@ NOTES:
 	- all your base are belong to us
 
 CHANGELOG:
-	v 1.1 [29-8-2008 13:40] - changed name from SoundBg to SoundLite 
-	v 1.0 [28-8-2008 12:30] - Initial release
+	v 1.2 [02-09-2008 14:27] - extra comment to understand handlers and volume function 
+	v 1.1 [29-08-2008 13:40] - changed name from SoundBg to SoundLite 
+	v 1.0 [28-08-2008 12:30] - Initial release
 		
 */
 package nl.matthijskamstra.media {
 	
 	import flash.display.*;
 	import flash.events.*;	
-	// import gs.TweenLite;
+	
+	import gs.TweenLite;
 	
     import flash.media.Sound;
     import flash.media.SoundChannel;
@@ -68,6 +70,8 @@ package nl.matthijskamstra.media {
 	
 	import flash.media.SoundTransform;
 	
+	
+	
 	public class SoundLite {
 		
 		// Constants:
@@ -76,7 +80,7 @@ package nl.matthijskamstra.media {
 		public static var LINKAGE_ID : String = "nl.matthijskamstra.media.SoundLite";
 		// vars
 		
-		public static var version:Number = 1.1;
+		public static var version:Number = 1.2;
 		
         private var positionTimer		:Timer;
 		private var isSoundPlaying		:Boolean;		
@@ -125,7 +129,7 @@ package nl.matthijskamstra.media {
 				isSoundPlaying = false;
 			}
 			
-			// mySoundChannel.addEventListener(Event.SOUND_COMPLETE, soundCompleteHandler);
+			mySoundChannel.addEventListener(Event.SOUND_COMPLETE, soundCompleteHandler);
 
             positionTimer = new Timer(50);
             positionTimer.addEventListener(TimerEvent.TIMER, positionTimerHandler);
@@ -162,6 +166,26 @@ package nl.matthijskamstra.media {
 			//trace( "SoundLite.forward" );
 		}
 		
+		/**
+		 * setVolume 
+		 * @usage		import nl.matthijskamstra.media.SoundLink; // import
+		 * 				var _soundLink:SoundLink = new SoundLink ( new track6() );
+		 * 				_soundLink.volume (.1);
+		 * @param	$volume		The volume, ranging from 0 (silent) to 1 (full volume). (default = 1)
+		 */
+		public function volume ($volume:Number = 1) {
+			//trace( "SoundLite.volume > $volume : " + $volume );
+			
+			// gs.tweenlite 
+			var transform:SoundTransform = mySoundChannel.soundTransform;
+			TweenLite.to (mySoundChannel, 1, { volume: $volume} );
+			/*
+			// no external classes
+			var _transform:SoundTransform = new SoundTransform($volume);
+			mySoundChannel.soundTransform = _transform;
+			*/
+		}
+		
 		
 		//////////////////////////////////////// getter/setters ////////////////////////////////////////
 		
@@ -190,14 +214,16 @@ package nl.matthijskamstra.media {
 			}
         }
 
-        private function completeHandler(e:Event):void {
+		// Dispatched when data has loaded successfully. 
+        public function completeHandler(e:Event):void {
 			// trace( "SoundLite.completeHandler > e : " + e );
 			if (this.vars != null && this.vars.onComplete != null) {
 				this.vars.onComplete.apply(null);
 			}
         }
 
-		private function id3Handler(e:Event):void {
+		// Dispatched by a Sound object when ID3 data is available for an MP3 sound. 
+		public function id3Handler(e:Event):void {
 			//trace( "SoundLite.id3Handler > e : " + e );
 			if (this.vars != null && this.vars.onTag != null && !isTagSet) {	
 				isTagSet = true;
@@ -214,19 +240,22 @@ package nl.matthijskamstra.media {
 			}
         }
 
+		// Dispatched when an input/output error occurs that causes a load operation to fail. 
         private function ioErrorHandler(e:Event):void {
 			trace( "SoundLite.ioErrorHandler > e : " + e );
 			positionTimer.stop();
         }
-
+		
+		// Dispatched when data is received as a load operation progresses. 
         public function progressHandler(e:ProgressEvent):void {
 			//trace( "SoundLite.progressHandler > e : " + e );
 			if (this.vars != null && this.vars.onProgress != null) {
 				this.vars.onProgress.apply(null, [(e.bytesLoaded / e.bytesTotal)]);
 			}
         }
-
-        private function soundCompleteHandler(e:Event):void {
+		
+		// Dispatched when data has loaded successfully. 
+        public function soundCompleteHandler(e:Event):void {
 			trace( "SoundLite.soundCompleteHandler > e : " + e );
 			positionTimer.stop();
         }
