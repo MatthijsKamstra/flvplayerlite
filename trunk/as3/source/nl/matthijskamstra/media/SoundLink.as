@@ -74,7 +74,7 @@ package nl.matthijskamstra.media {
 		
 		public static var version:Number = 1.0;
 		
-        private var positionTimer		:Timer;
+//        public var positionTimer		:Timer;
 		private var isSoundPlaying		:Boolean;		
 		private var isTagSet			:Boolean		= false;	// preventing id3 tags to set twice		
 		
@@ -129,13 +129,13 @@ package nl.matthijskamstra.media {
 		 * @param	$file		location of mp3 file (example: 'mp3/foobar.mp3')
 		 * @param	$vars			extra vars (like autoplay, ...)
 		 */
-		public static function create ($file:String, $vars:Object = null ):SoundLink{
+		public static function create ($file:*, $vars:Object = null ):SoundLink{
 			return new SoundLink ($file, $vars );
 		}
 		
 		//////////////////////////////////////// Listener ////////////////////////////////////////
 		
-		
+	
 	} // end class
 	
 } // end package
