@@ -82,10 +82,11 @@ package nl.matthijskamstra.media {
 		
 		public static var version:Number = 1.2;
 		
-        private var positionTimer		:Timer;
+        
 		private var isSoundPlaying		:Boolean;		
 		private var isTagSet			:Boolean		= false;	// preventing id3 tags to set twice		
 		
+		public var positionTimer		:Timer;
         public var mySound				:Sound;
         public var mySoundChannel		:SoundChannel 	= new SoundChannel();		
 		public var vars					:Object; 								// Variables (holds things like autoplay)
@@ -254,9 +255,9 @@ package nl.matthijskamstra.media {
 			}
         }
 		
-		// Dispatched when data has loaded successfully. 
+		// Dispatched when a sound has finished playing. (all loops included) 
         public function soundCompleteHandler(e:Event):void {
-			trace( "SoundLite.soundCompleteHandler > e : " + e );
+			//trace( "SoundLite.soundCompleteHandler > e : " + e );
 			positionTimer.stop();
         }
 		
